@@ -1,16 +1,42 @@
-import React from 'react';
+import React from "react";
+import { useAuth } from "../../Provider/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const { registerByEmail } = useAuth();
+  const navigate = useNavigate()
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    const user= await registerByEmail(email , password);
+    console.log(user);
+navigate('/')
+  };
+
   return (
     <div className="flex flex-col justify-center sm:py-12">
       <div className="relative py-3 sm:max-w-xl sm:mx-auto">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
         <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-          <h1 className="text-4xl font-bold text-center text-gray-900 mb-8">Create an account</h1>
-          <form className="space-y-6" action="#" method="POST">
+          <h1 className="text-4xl font-bold text-center text-gray-900 mb-8">
+            Create an account
+          </h1>
+          <form
+            onSubmit={handleRegister}
+            className="space-y-6"
+            action="#"
+            method="POST"
+          >
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="first_name"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   First name
                 </label>
                 <input
@@ -24,7 +50,10 @@ function Register() {
               </div>
 
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="last_name"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Last name
                 </label>
                 <input
@@ -39,7 +68,10 @@ function Register() {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email address
               </label>
               <input
@@ -53,7 +85,10 @@ function Register() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <input

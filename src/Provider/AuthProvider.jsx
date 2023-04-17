@@ -4,8 +4,10 @@ import {
   GithubAuthProvider,
   OAuthProvider,
   TwitterAuthProvider,
+  createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -31,6 +33,13 @@ const AuthProvider = ({ children }) => {
     });
   }, []);
 
+  const singInByEmail = (email ,password) => {
+
+    return signInWithEmailAndPassword(auth, email, password)
+  };
+  const registerByEmail = (email ,password) => {
+return createUserWithEmailAndPassword(auth, email, password)
+  };
   /* login with facebook start */
   const providerFb = new FacebookAuthProvider();
   const singInByFb = () => {
@@ -81,6 +90,8 @@ const AuthProvider = ({ children }) => {
     singInByTwitter,
     singInByGithub,
     singInByMS,
+    singInByEmail,
+    registerByEmail,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

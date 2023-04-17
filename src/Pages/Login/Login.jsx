@@ -4,10 +4,22 @@ import { useAuth } from "../../Provider/AuthProvider";
 
 function Login() {
     
-    const { singInByFb, singInByTwitter, singInByGithub,singInByMS } = useAuth();
+    const { singInByFb, singInByTwitter, singInByGithub,singInByMS ,singInByEmail} = useAuth();
   const navigation = useNavigate();
   //   console.log(singInByFb);
 
+  /* login with facebook start */
+  const handleSignInByEmail = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    const user= await singInByEmail(email , password);
+    console.log(user);
+navigate('/')
+  };
+  /* login with facebook end */
   /* login with facebook start */
   const handleSigninWithFacebook = async () => {
     try {
@@ -65,7 +77,7 @@ function Login() {
           <h1 className="text-4xl font-bold text-center text-gray-900 mb-8">
             Log in to your account
           </h1>
-          <form className="space-y-6" action="#" method="POST">
+          <form onSubmit={handleSignInByEmail} className="space-y-6" action="#" method="POST">
             <div>
               <label
                 htmlFor="email"
@@ -137,12 +149,12 @@ function Login() {
 
             <div className="text-center text-sm mt-4">
               <span className="text-gray-600">Don't have an account yet? </span>
-              <a
-                href="#"
+              <Link 
+                to="/register"
                 className="font-medium text-blue-600 hover:text-blue-500"
               >
                 Create one now
-              </a>
+              </Link>
             </div>
           </form>
           <div className="mt-6">
